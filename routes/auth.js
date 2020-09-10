@@ -3,8 +3,8 @@ const router = express.Router();
 const authController = require("../controllers/authController");
 const { check } = require("express-validator");
 
-router.post("/");
+router.post("/", authController.autenticarUsuario);
 
-router.get("/");
+router.get("/", authController.usuarioAutenticado);
 
 module.exports = router;
