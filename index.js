@@ -1,9 +1,14 @@
 const express = require("express");
 const connDB = require("./config/db");
+const cors = require('cors')
 
 const app = express();
 
 connDB();
+const optCors = {
+  origin: process.env.FRONTEND_URL
+}
+app.use(cors(optCors));
 
 const port = process.env.PORT || 4000;
 
