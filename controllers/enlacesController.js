@@ -44,6 +44,15 @@ exports.nuevoEnlace = async (req, res, next) => {
   console.log(error);
 };
 
+exports.todosEnlaces = async (req, res) => {
+  try {
+    const enlaces = await Enlaces.find({}).select("url-_id");
+    res.json({ enlaces });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 exports.obtenerEnlace = async (req, res, next) => {
   const { url } = req.params;
 
