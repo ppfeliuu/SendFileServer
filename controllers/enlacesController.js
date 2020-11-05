@@ -53,6 +53,24 @@ exports.todosEnlaces = async (req, res) => {
   }
 };
 
+exports.tienePassword = async (req, res, next) => {
+  const { url } = req.params;
+
+  //Check link
+  const enlace = await Enlaces.findOne({ url });
+
+  if (!enlace) {
+    res.status(404).json({ msg: "Enlace no existe" });
+    return next();
+  }
+
+  if (enlace.password) {
+    return res.json({ password: true, enlace: enlace.url });
+  }
+
+  next();
+};
+
 exports.obtenerEnlace = async (req, res, next) => {
   const { url } = req.params;
 
