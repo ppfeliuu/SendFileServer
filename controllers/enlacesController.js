@@ -53,6 +53,19 @@ exports.todosEnlaces = async (req, res) => {
   }
 };
 
+exports.verificarPassword = async (req, res, next) => {
+  const { url } = req.params;
+  const { password } = req.body;
+
+  const enlace = await Enlaces.findOne({ url });
+
+  if (bcrypt.compareSync(password, enlace.password)) {
+    next();
+  } else {
+    return res.status(401).json({ msg: "Password incorrecto" });
+  }
+};
+
 exports.tienePassword = async (req, res, next) => {
   const { url } = req.params;
 
@@ -82,7 +95,7 @@ exports.obtenerEnlace = async (req, res, next) => {
     return next();
   }
 
-  res.json({ archivo: enlace.nombre });
+  res.json({ archivo: enlace.nombre, password: false });
 
   next();
 };
